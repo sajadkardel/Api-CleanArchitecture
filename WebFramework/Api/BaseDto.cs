@@ -2,7 +2,7 @@
 using Entities;
 using System.ComponentModel.DataAnnotations;
 using Entities.Common;
-using WebFramework.CustomMapping;
+using WebFramework.PackageConfiguration.AutoMapper;
 
 namespace WebFramework.Api
 {

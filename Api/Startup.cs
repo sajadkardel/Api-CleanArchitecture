@@ -1,14 +1,15 @@
 using Autofac;
-using Common;
 using Common.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebFramework.Configuration;
-using WebFramework.CustomMapping;
 using WebFramework.Middlewares;
-using WebFramework.Swagger;
+using WebFramework.PackageConfiguration.Autofac;
+using WebFramework.PackageConfiguration.AutoMapper;
+using WebFramework.PackageConfiguration.Identity;
+using WebFramework.PackageConfiguration.Swagger;
 
 namespace Api
 {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace WebFramework.CustomMapping
+namespace WebFramework.PackageConfiguration.AutoMapper
 {
     public interface IHaveCustomMapping
     {

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Common.Markers;
 using Entities.Identity;
+using FluentValidation;
 using WebFramework.Api;
 
 namespace Api.Models.Identity
 {
-    public class UserDto : BaseDto<UserDto, User>, IValidatableObject
+    public class UserDto : BaseDto<UserDto, User>
     {
         [Required]
         [StringLength(100)]
@@ -27,15 +29,13 @@ namespace Api.Models.Identity
         public int Age { get; set; }
 
         public GenderType Gender { get; set; }
+    }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    public class UserDtoValidator : AbstractValidator<UserDto>, IDtoValidator
+    {
+        public UserDtoValidator()
         {
-            if (UserName.Equals("test", StringComparison.OrdinalIgnoreCase))
-                yield return new ValidationResult("نام کاربری نمیتواند Test باشد", new[] { nameof(UserName) });
-            if (Password.Equals("123456"))
-                yield return new ValidationResult("رمز عبور نمیتواند 123456 باشد", new[] { nameof(Password) });
-            if (Gender == GenderType.Male && Age > 30)
-                yield return new ValidationResult("آقایان بیشتر از 30 سال معتبر نیستند", new[] { nameof(Gender), nameof(Age) });
+            RuleFor(p => p.UserName).NotNull().WithMessage("نام کاربری را وارد نمایید");
         }
     }
 }

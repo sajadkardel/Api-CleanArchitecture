@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AutoMapper;
 
-namespace WebFramework.CustomMapping
+namespace WebFramework.PackageConfiguration.AutoMapper
 {
     public class CustomMappingProfile : Profile
     {

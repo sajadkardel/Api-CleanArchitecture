@@ -1,4 +1,8 @@
-﻿using Common;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Common.Settings;
 using Common.Utilities;
 using ElmahCore.Mvc;
 using Microsoft.AspNetCore.Builder;
@@ -9,13 +13,8 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Common.Settings;
 
-namespace WebFramework.Swagger
+namespace WebFramework.PackageConfiguration.Swagger
 {
     public static class SwaggerConfigurationExtensions
     {

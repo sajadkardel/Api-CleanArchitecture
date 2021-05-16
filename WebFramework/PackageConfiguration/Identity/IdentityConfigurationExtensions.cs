@@ -1,13 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Entities;
-using Common;
-using Common.Settings;
-using Microsoft.AspNetCore.Identity;
-using Data;
+﻿using Common.Settings;
 using Data.Context;
 using Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace WebFramework.Configuration
+namespace WebFramework.PackageConfiguration.Identity
 {
     public static class IdentityConfigurationExtensions
     {

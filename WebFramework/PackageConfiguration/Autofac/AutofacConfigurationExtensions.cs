@@ -1,17 +1,13 @@
 ﻿using Autofac;
-using Common;
 using Common.Markers;
 using Common.Settings;
-using Data;
 using Data.Context;
 using Data.Contracts;
 using Data.Repositories;
-using Entities;
 using Entities.Common;
-using Services;
 using Services.Services;
 
-namespace WebFramework.Configuration
+namespace WebFramework.PackageConfiguration.Autofac
 {
     public static class AutofacConfigurationExtensions
     {

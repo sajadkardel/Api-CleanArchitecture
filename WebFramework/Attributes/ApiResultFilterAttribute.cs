@@ -1,12 +1,10 @@
-﻿using Common;
+﻿using System.Linq;
+using Common.Api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Collections.Generic;
-using System.Linq;
-using Common.Api;
 using WebFramework.Api;
 
-namespace WebFramework.Filters
+namespace WebFramework.Attributes
 {
     public class ApiResultFilterAttribute : ActionFilterAttribute
     {

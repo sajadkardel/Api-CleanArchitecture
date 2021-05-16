@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebFramework.Filters;
+using WebFramework.Attributes;
 
 namespace WebFramework.Api
 {

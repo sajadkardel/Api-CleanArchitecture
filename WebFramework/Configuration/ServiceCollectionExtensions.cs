@@ -1,11 +1,7 @@
-﻿using Common;
-using Common.Exceptions;
+﻿using Common.Exceptions;
 using Common.Utilities;
-using Data;
-using Data.Repositories;
 using ElmahCore.Mvc;
 using ElmahCore.Sql;
-using Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +15,18 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Api;
+using Common.Markers;
 using Common.Settings;
 using Data.Context;
 using Data.Contracts;
 using Entities.Identity;
+using FluentValidation.AspNetCore;
+using WebFramework.PackageConfiguration.FluentValidation;
 
 namespace WebFramework.Configuration
 {
@@ -64,7 +64,11 @@ namespace WebFramework.Configuration
                 option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 //option.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
                 //option.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            }).AddFluentValidation(fv =>
+            {
+                fv.RegisterAllDtoValidators<IDtoValidator>(Assembly.GetEntryAssembly());
             });
+
             services.AddSwaggerGenNewtonsoftSupport();
 
             #region Old way (We don't need this from ASP.NET Core 3.0 onwards)
