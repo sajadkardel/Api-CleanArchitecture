@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Models;
 using Api.Models.Identity;
+using AutoMapper;
 using Common.Exceptions;
 using Data.Contracts;
 using ElmahCore;
@@ -19,44 +20,15 @@ using WebFramework.Api;
 namespace Api.Controllers.v1
 {
     [ApiVersion("1")]
-    public class UsersController : BaseController
+    public class UsersController : CrudController<UserDto, UserSelectDto, User, int>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ILogger<UsersController> _logger;
         private readonly IJwtService _jwtService;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
-        private readonly SignInManager<User> _signInManager;
 
-        public UsersController(IUserRepository userRepository, ILogger<UsersController> logger, IJwtService jwtService,
-            UserManager<User> userManager, RoleManager<Role> roleManager, SignInManager<User> signInManager)
+        public UsersController(IRepository<User> repository, IMapper mapper, IJwtService jwtService, UserManager<User> userManager) : base(repository, mapper)
         {
-            _userRepository = userRepository;
-            _logger = logger;
             _jwtService = jwtService;
             _userManager = userManager;
-            _roleManager = roleManager;
-            _signInManager = signInManager;
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public virtual async Task<ActionResult<List<User>>> Get(CancellationToken cancellationToken)
-        {
-            var users = await _userRepository.TableNoTracking.ToListAsync(cancellationToken);
-            return Ok(users);
-        }
-
-        [HttpGet("{id:int}")]
-        public virtual async Task<ApiResult<User>> Get(int id, CancellationToken cancellationToken)
-        {
-            var user = await _userRepository.GetByIdAsync(cancellationToken, id);
-            if (user == null)
-                return NotFound();
-
-            await _userManager.UpdateSecurityStampAsync(user);
-
-            return user;
         }
 
         /// <summary>
@@ -85,52 +57,6 @@ namespace Api.Controllers.v1
             return new JsonResult(jwt);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public virtual async Task<ApiResult<User>> Create(UserDto userDto, CancellationToken cancellationToken)
-        {
-            _logger.LogError("متد Create فراخوانی شد");
-            HttpContext.RiseError(new Exception("متد Create فراخوانی شد"));
-
-            var user = new User
-            {
-                Age = userDto.Age,
-                FullName = userDto.FullName,
-                Gender = userDto.Gender,
-                UserName = userDto.UserName,
-                Email = userDto.Email
-            };
-            await _userManager.AddToRoleAsync(user, "Admin");
-
-            return user;
-        }
-
-        [HttpPut]
-        public virtual async Task<ApiResult> Update(int id, User user, CancellationToken cancellationToken)
-        {
-            var updateUser = await _userRepository.GetByIdAsync(cancellationToken, id);
-
-            updateUser.UserName = user.UserName;
-            updateUser.PasswordHash = user.PasswordHash;
-            updateUser.FullName = user.FullName;
-            updateUser.Age = user.Age;
-            updateUser.Gender = user.Gender;
-            updateUser.IsActive = user.IsActive;
-            updateUser.LastLoginDate = user.LastLoginDate;
-
-            await _userRepository.UpdateAsync(updateUser, cancellationToken);
-
-            return Ok();
-        }
-
-        [HttpDelete]
-        public virtual async Task<ApiResult> Delete(int id, CancellationToken cancellationToken)
-        {
-            var user = await _userRepository.GetByIdAsync(cancellationToken, id);
-            await _userRepository.DeleteAsync(user, cancellationToken);
-
-            return Ok();
-        }
 
     }
 }

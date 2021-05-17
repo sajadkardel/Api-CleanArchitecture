@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Models;
 using Api.Models.Identity;
+using AutoMapper;
 using Data.Contracts;
 using Entities.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -16,44 +17,38 @@ namespace Api.Controllers.v2
     [ApiVersion("2")]
     public class UsersController : Api.Controllers.v1.UsersController
     {
-        public UsersController(IUserRepository userRepository,
-            ILogger<Api.Controllers.v1.UsersController> logger,
-            IJwtService jwtService,
-            UserManager<User> userManager,
-            RoleManager<Role> roleManager,
-            SignInManager<User> signInManager)
-            : base(userRepository, logger, jwtService, userManager, roleManager, signInManager)
+        public UsersController(IRepository<User> repository, IMapper mapper, IJwtService jwtService, UserManager<User> userManager) : base(repository, mapper, jwtService, userManager)
         {
         }
 
-        public override Task<ApiResult<User>> Create(UserDto userDto, CancellationToken cancellationToken)
+        public override Task<ActionResult> Token(TokenRequest tokenRequest, CancellationToken cancellationToken)
         {
-            return base.Create(userDto, cancellationToken);
+            return base.Token(tokenRequest, cancellationToken);
+        }
+
+        public override Task<ActionResult<List<UserSelectDto>>> Get(CancellationToken cancellationToken)
+        {
+            return base.Get(cancellationToken);
+        }
+
+        public override Task<ApiResult<UserSelectDto>> Get(int id, CancellationToken cancellationToken)
+        {
+            return base.Get(id, cancellationToken);
+        }
+
+        public override Task<ApiResult<UserSelectDto>> Create(UserDto dto, CancellationToken cancellationToken)
+        {
+            return base.Create(dto, cancellationToken);
+        }
+
+        public override Task<ApiResult<UserSelectDto>> Update(int id, UserDto dto, CancellationToken cancellationToken)
+        {
+            return base.Update(id, dto, cancellationToken);
         }
 
         public override Task<ApiResult> Delete(int id, CancellationToken cancellationToken)
         {
             return base.Delete(id, cancellationToken);
-        }
-
-        public override Task<ActionResult<List<User>>> Get(CancellationToken cancellationToken)
-        {
-            return base.Get(cancellationToken);
-        }
-
-        public override Task<ApiResult<User>> Get(int id, CancellationToken cancellationToken)
-        {
-            return base.Get(id, cancellationToken);
-        }
-
-        public override Task<ActionResult> Token([FromForm] TokenRequest tokenRequest, CancellationToken cancellationToken)
-        {
-            return base.Token(tokenRequest, cancellationToken);
-        }
-
-        public override Task<ApiResult> Update(int id, User user, CancellationToken cancellationToken)
-        {
-            return base.Update(id, user, cancellationToken);
         }
     }
 }

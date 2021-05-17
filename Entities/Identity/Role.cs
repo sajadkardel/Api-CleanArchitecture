@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Entities.Identity
 {
-    public class Role : IdentityRole<int>, IEntity
+    public class Role : IdentityRole<int>, IEntity<int>
     {
         [Required]
         [StringLength(100)]
