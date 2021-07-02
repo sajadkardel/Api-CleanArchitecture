@@ -9,6 +9,7 @@ using Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services;
 using Services.Services;
 using WebFramework.Api;
 
@@ -21,7 +22,7 @@ namespace Api.Controllers.v2
         {
         }
 
-        public override Task<ActionResult> Token(TokenRequest tokenRequest, CancellationToken cancellationToken)
+        public override Task<ApiResult<AccessToken>> Token(TokenRequest tokenRequest, CancellationToken cancellationToken)
         {
             return base.Token(tokenRequest, cancellationToken);
         }

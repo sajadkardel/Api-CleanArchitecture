@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Services;
 using Services.Services;
 using WebFramework.Api;
 
@@ -39,7 +40,7 @@ namespace Api.Controllers.v1
         /// <returns></returns>
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public virtual async Task<ActionResult> Token([FromForm] TokenRequest tokenRequest, CancellationToken cancellationToken)
+        public virtual async Task<ApiResult<AccessToken>> Token([FromForm] TokenRequest tokenRequest, CancellationToken cancellationToken)
         {
             if (!tokenRequest.grant_type.Equals("password", StringComparison.OrdinalIgnoreCase))
                 throw new Exception("OAuth flow is not password.");
@@ -54,7 +55,7 @@ namespace Api.Controllers.v1
                 throw new BadRequestException("نام کاربری یا رمز عبور اشتباه است");
 
             var jwt = await _jwtService.GenerateAsync(user);
-            return new JsonResult(jwt);
+            return jwt;
         }
 
 
