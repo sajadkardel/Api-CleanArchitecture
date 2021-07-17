@@ -97,5 +97,11 @@ namespace Common.Utilities
         {
             return !type.IsValueType && !type.IsPrimitive && type.Namespace != null && !type.Namespace.StartsWith("System", StringComparison.Ordinal);
         }
+
+        public static string GetParentFolderName(this Type type, int level = 0)
+        {
+            string[] strArray = type?.Namespace?.Split(".");
+            return strArray?[strArray.Length - 1 + level];
+        }
     }
 }

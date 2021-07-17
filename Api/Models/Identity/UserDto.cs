@@ -1,4 +1,5 @@
-﻿using Common.Markers;
+﻿using Common.Enums;
+using Common.Markers;
 using Entities.Identity;
 using FluentValidation;
 using WebFramework.Api;
