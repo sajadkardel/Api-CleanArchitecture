@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Common.Enums;
 using Entities.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,14 +31,5 @@ namespace Entities.Identity
         {
             builder.Property(p => p.UserName).IsRequired().HasMaxLength(100);
         }
-    }
-
-    public enum GenderType
-    {
-        [Display(Name = "مرد")]
-        Male = 1,
-
-        [Display(Name = "زن")]
-        Female = 2
     }
 }
