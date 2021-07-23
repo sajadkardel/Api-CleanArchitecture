@@ -36,7 +36,7 @@ namespace Api
 
 
             //Set deafult proxy
-            WebRequest.DefaultWebProxy = new WebProxy("http://127.0.0.1:8118", true) { UseDefaultCredentials = true };
+            //WebRequest.DefaultWebProxy = new WebProxy("http://127.0.0.1:8118", true) { UseDefaultCredentials = true };
 
             // You can configure your logger using a configuration file:
 
@@ -82,42 +82,42 @@ namespace Api
                     webBuilder.UseStartup<Startup>();
                 });
 
-        private static void UsingCodeConfiguration()
-        {
-            // Other overloads exist, for example, configure the SDK with only the DSN or no parameters at all.
-            var config = new LoggingConfiguration();
+        //private static void UsingCodeConfiguration()
+        //{
+        //    // Other overloads exist, for example, configure the SDK with only the DSN or no parameters at all.
+        //    var config = new LoggingConfiguration();
 
-            config.AddSentry(options =>
-            {
-                options.Layout = "${message}";
-                options.BreadcrumbLayout = "${logger}: ${message}"; // Optionally specify a separate format for breadcrumbs
+        //    config.AddSentry(options =>
+        //    {
+        //        options.Layout = "${message}";
+        //        options.BreadcrumbLayout = "${logger}: ${message}"; // Optionally specify a separate format for breadcrumbs
 
-                options.MinimumBreadcrumbLevel = NLog.LogLevel.Debug; // Debug and higher are stored as breadcrumbs (default is Info)
-                options.MinimumEventLevel = NLog.LogLevel.Error; // Error and higher is sent as event (default is Error)
+        //        options.MinimumBreadcrumbLevel = NLog.LogLevel.Debug; // Debug and higher are stored as breadcrumbs (default is Info)
+        //        options.MinimumEventLevel = NLog.LogLevel.Error; // Error and higher is sent as event (default is Error)
 
-                // If DSN is not set, the SDK will look for an environment variable called SENTRY_DSN. If
-                // nothing is found, SDK is disabled.
-                options.Dsn = "https://a48f67497c814561aca2c66fa5ee37fc:a5af1a051d6f4f09bdd82472d5c2629d@sentry.io/1340240";
+        //        // If DSN is not set, the SDK will look for an environment variable called SENTRY_DSN. If
+        //        // nothing is found, SDK is disabled.
+        //        options.Dsn = "https://a48f67497c814561aca2c66fa5ee37fc:a5af1a051d6f4f09bdd82472d5c2629d@sentry.io/1340240";
 
-                options.AttachStacktrace = true;
-                options.SendDefaultPii = true; // Send Personal Identifiable information like the username of the user logged in to the device
+        //        options.AttachStacktrace = true;
+        //        options.SendDefaultPii = true; // Send Personal Identifiable information like the username of the user logged in to the device
 
-                options.IncludeEventDataOnBreadcrumbs = true; // Optionally include event properties with breadcrumbs
-                options.ShutdownTimeoutSeconds = 5;
+        //        options.IncludeEventDataOnBreadcrumbs = true; // Optionally include event properties with breadcrumbs
+        //        options.ShutdownTimeoutSeconds = 5;
 
-                options.AddTag("logger", "${logger}");  // Send the logger name as a tag
+        //        options.AddTag("logger", "${logger}");  // Send the logger name as a tag
 
-                options.HttpProxy = new WebProxy("http://127.0.0.1:8118", true) { UseDefaultCredentials = true };
-                // Other configuration
-            });
+        //        options.HttpProxy = new WebProxy("http://127.0.0.1:8118", true) { UseDefaultCredentials = true };
+        //        // Other configuration
+        //    });
 
-            config.AddTarget(new DebuggerTarget("Debugger"));
-            config.AddTarget(new ColoredConsoleTarget("Console"));
+        //    config.AddTarget(new DebuggerTarget("Debugger"));
+        //    config.AddTarget(new ColoredConsoleTarget("Console"));
 
-            config.AddRuleForAllLevels("Console");
-            config.AddRuleForAllLevels("Debugger");
+        //    config.AddRuleForAllLevels("Console");
+        //    config.AddRuleForAllLevels("Debugger");
 
-            LogManager.Configuration = config;
-        }
+        //    LogManager.Configuration = config;
+        //}
     }
 }
