@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Models;
 using Api.Models.Identity;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Common.Exceptions;
 using Data.Contracts;
 using ElmahCore;
@@ -58,6 +59,21 @@ namespace Api.Controllers.v1
             return jwt;
         }
 
+        [HttpPost("{userName}")]
+        public async Task<ApiResult<UserSelectDto>> GetByUserName(string userName,CancellationToken cancellationToken)
+        {
+            var dto = await Repository.TableNoTracking.ProjectTo<UserSelectDto>(Mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync(p => p.UserName.Equals(userName), cancellationToken);
+            return dto;
+        }
 
+        [HttpDelete("{userName}")]
+        public async Task<ApiResult> DeleteByUserName(string userName, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(user1 => user1.UserName == userName, cancellationToken: cancellationToken);
+           await _userManager.DeleteAsync(user);
+
+           return Ok();
+        }
     }
 }
