@@ -12,5 +12,29 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.v1.UsersController.GetByUserName(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get User By UserName
+            </summary>
+            <param name="userName"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.v1.UsersController.DeleteByUserName(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Delete User By UserName
+            </summary>
+            <param name="userName"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.v1.UsersController.UpdateWithGetByUserName(Api.Models.Identity.UserDto,System.Threading.CancellationToken)">
+            <summary>
+            Update With Get By UserName
+            </summary>
+            <param name="userDto"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

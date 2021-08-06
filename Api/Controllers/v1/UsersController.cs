@@ -59,21 +59,57 @@ namespace Api.Controllers.v1
             return jwt;
         }
 
-        [HttpPost("{userName}")]
-        public async Task<ApiResult<UserSelectDto>> GetByUserName(string userName,CancellationToken cancellationToken)
+        /// <summary>
+        /// Get User By UserName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        public virtual async Task<ApiResult<UserSelectDto>> GetByUserName([FromQuery] string userName, CancellationToken cancellationToken)
         {
             var dto = await Repository.TableNoTracking.ProjectTo<UserSelectDto>(Mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(p => p.UserName.Equals(userName), cancellationToken);
             return dto;
         }
 
-        [HttpDelete("{userName}")]
-        public async Task<ApiResult> DeleteByUserName(string userName, CancellationToken cancellationToken)
+        /// <summary>
+        /// Delete User By UserName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpDelete("[action]")]
+        public virtual async Task<ApiResult> DeleteByUserName([FromQuery] string userName, CancellationToken cancellationToken)
         {
             var user = await _userManager.Users.SingleOrDefaultAsync(user1 => user1.UserName == userName, cancellationToken: cancellationToken);
-           await _userManager.DeleteAsync(user);
+            await _userManager.DeleteAsync(user);
 
-           return Ok();
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Update By UserName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userDto"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut("[action]")]
+        public virtual async Task<ApiResult<UserSelectDto>> UpdateByUserName([FromQuery] string userName, UserDto userDto, CancellationToken cancellationToken)
+        {
+            var model = await _userManager.Users.SingleOrDefaultAsync(user => user.UserName == userName, cancellationToken: cancellationToken);
+            userDto.Id = model.Id;
+
+            model = userDto.ToEntity(Mapper, model);
+
+            await Repository.UpdateAsync(model, cancellationToken);
+
+            var resultDto = await Repository.TableNoTracking.ProjectTo<UserSelectDto>(Mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync(p => p.Id.Equals(model.Id), cancellationToken);
+
+            return resultDto;
         }
     }
 }
