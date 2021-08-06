@@ -28,10 +28,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Api.Controllers.v1.UsersController.UpdateWithGetByUserName(Api.Models.Identity.UserDto,System.Threading.CancellationToken)">
+        <member name="M:Api.Controllers.v1.UsersController.UpdateByUserName(System.String,Api.Models.Identity.UserDto,System.Threading.CancellationToken)">
             <summary>
-            Update With Get By UserName
+            Update By UserName
             </summary>
+            <param name="userName"></param>
             <param name="userDto"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
