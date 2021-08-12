@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Common.Utilities;
 using Entities.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ namespace Entities.Identity
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
+            builder.ToTable(nameof(Role), typeof(Role).GetParentFolderName());
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
         }
     }

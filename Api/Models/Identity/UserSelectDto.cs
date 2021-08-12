@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Enums;
 using Entities.Identity;
 using WebFramework.Api;
 

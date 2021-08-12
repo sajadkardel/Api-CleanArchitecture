@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebFramework.Attributes;
 
 namespace WebFramework.Api
 {
     [ApiController]
-    //[AllowAnonymous]
+    [AllowAnonymous]
     [ApiResultFilter]
     [Route("api/v{version:apiVersion}/[controller]")]// api/v1/[controller]
     public class BaseController : ControllerBase

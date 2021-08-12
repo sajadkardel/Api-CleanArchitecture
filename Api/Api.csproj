@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\sajad kardel\source\repos\Main\Api\Api.xml</DocumentationFile>
+    <DocumentationFile>D:\Projects\GitHub\Api-CleanArchitecture\Api\Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +19,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebFramework\WebFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

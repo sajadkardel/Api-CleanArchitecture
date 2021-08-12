@@ -27,14 +27,14 @@ namespace Api.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<List<RoleSelectDto>> Get(CancellationToken cancellationToken)
+        public virtual async Task<List<RoleSelectDto>> Get(CancellationToken cancellationToken)
         {
             var roles = await _repository.TableNoTracking.ProjectTo<RoleSelectDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
             return roles;
         }
 
         [HttpGet("{id:int}")]
-        public async Task<RoleSelectDto> Get(int id, CancellationToken cancellationToken)
+        public virtual async Task<RoleSelectDto> Get(int id, CancellationToken cancellationToken)
         {
             var role = await _repository.TableNoTracking.ProjectTo<RoleSelectDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(roleSelectDto => roleSelectDto.Id == id, cancellationToken);
@@ -42,7 +42,7 @@ namespace Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<RoleSelectDto> Create(RoleDto dto, CancellationToken cancellationToken)
+        public virtual async Task<RoleSelectDto> Create(RoleDto dto, CancellationToken cancellationToken)
         {
             var model = dto.ToEntity(_mapper);
             await _repository.Entities.AddAsync(model, cancellationToken);
@@ -54,7 +54,7 @@ namespace Api.Controllers.v1
         }
 
         [HttpPut]
-        public async Task<RoleSelectDto> Update(int id, RoleDto dto, CancellationToken cancellationToken)
+        public virtual async Task<RoleSelectDto> Update(int id, RoleDto dto, CancellationToken cancellationToken)
         {
             var model = await _repository.GetByIdAsync(cancellationToken, id);
             model = dto.ToEntity(_mapper, model);
@@ -67,7 +67,7 @@ namespace Api.Controllers.v1
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {
             var model = await _repository.GetByIdAsync(cancellationToken, id);
             await _repository.DeleteAsync(model, cancellationToken);
