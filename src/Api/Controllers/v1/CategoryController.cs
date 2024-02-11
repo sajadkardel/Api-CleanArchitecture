@@ -1,14 +1,12 @@
-﻿using Api.Models.Product;
-using AutoMapper;
-using Domain.Entities.Product;
-using Domain.Repositories.Contracts;
-using Infrastructure.Api;
+﻿using Infrastructure.Api;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
-public class CategoryController : CrudController<CategoryDto, CategorySelectDto, Category, int>
+public class CategoryController : BaseController
 {
-    public CategoryController(IRepository<Category> repository, IMapper mapper) : base(repository, mapper)
+    public IActionResult Create()
     {
+        return Ok();
     }
 }

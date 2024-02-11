@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Api
+namespace Infrastructure.Api
 {
     public enum ApiResultStatusCode
     {

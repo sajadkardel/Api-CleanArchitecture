@@ -1,7 +1,7 @@
 ﻿using System;
-using Domain.Api;
+using Infrastructure.Api;
 
-namespace Domain.Exceptions
+namespace Infrastructure.Exceptions
 {
     public class NotFoundException : AppException
     {

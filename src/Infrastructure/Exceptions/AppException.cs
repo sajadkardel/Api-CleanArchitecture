@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Infrastructure.Api;
 using System.Net;
-using Domain.Api;
 
-namespace Domain.Exceptions
+namespace Infrastructure.Exceptions
 {
     public class AppException : Exception
     {

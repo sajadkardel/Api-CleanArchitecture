@@ -1,7 +1,7 @@
 ﻿using Domain.Context;
-using Domain.DataInitializer;
 using Domain.Utilities;
 using Infrastructure.Configuration;
+using Infrastructure.DataInitializer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

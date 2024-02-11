@@ -2,7 +2,7 @@
 
 namespace Api.Models.Product
 {
-    public class CategorySelectDto : BaseDto<CategorySelectDto, Domain.Entities.Product.Category, int>
+    public class CategorySelectDto
     {
         public string Name { get; set; }
     }

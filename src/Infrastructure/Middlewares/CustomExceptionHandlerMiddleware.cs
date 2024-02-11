@@ -1,6 +1,5 @@
-﻿using Domain.Api;
-using Domain.Exceptions;
-using Infrastructure.Api;
+﻿using Infrastructure.Api;
+using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

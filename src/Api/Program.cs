@@ -1,36 +1,46 @@
-using Api;
-using Autofac.Extensions.DependencyInjection;
-using NLog.Web;
+using Domain.Settings;
+using Infrastructure.Configuration;
+using Infrastructure.Middlewares;
 
-//var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-//// Add services to the container.
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-//var app = builder.Build();
+builder.Services.Configure<GeneralSettings>(builder.Configuration.GetSection(nameof(GeneralSettings)));
+builder.Services.AddDbContext(builder.Configuration);
+builder.Services.AddMinimalMvc();
 
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseCustomExceptionHandler();
+
+app.UseHsts(app.Environment);
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+//Use this config just in Develoment (not in Production)
+app.UseCors(config => config.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+//app.UseEndpoints(config =>
 //{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+//    config.MapControllers(); // Map attribute routing
+//                             //    .RequireAuthorization(); Apply AuthorizeFilter as global filter to all endpoints
+//                             //config.MapDefaultControllerRoute(); // Map default route {controller=Home}/{action=Index}/{id?}
+//});
 
-//app.UseHttpsRedirection();
-
-//app.Run();
-
-
-static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureLogging(options => options.ClearProviders())
-                .UseNLog()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    //webBuilder.ConfigureLogging(options => options.ClearProviders());
-                    //webBuilder.UseNLog();
-                    webBuilder.UseStartup<Startup>();
-                });
+app.Run();

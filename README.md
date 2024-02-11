@@ -3,7 +3,6 @@
 ## Techniques and Features
 - JWT Authentication
 - Secure JWT using Encryption (JWE)
-- Logging to File, Console and Database using [Elmah](https://github.com/ElmahCore/ElmahCore) & [NLog](https://github.com/NLog/NLog.Web)
 - Logging to [sentry.io](sentry.io) (Log Management System)
 - Exception Handling using Custom Middleware
 - Automatic Validation

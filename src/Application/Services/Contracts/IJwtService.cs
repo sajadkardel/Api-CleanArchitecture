@@ -6,6 +6,5 @@ namespace Application.Services.Contracts
 {
     public interface IJwtService
     {
-        Task<AccessToken> GenerateAsync(User user);
     }
 }

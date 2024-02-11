@@ -1,6 +1,6 @@
 ﻿using Domain.Markers;
 
-namespace Domain.DataInitializer
+namespace Infrastructure.DataInitializer
 {
     public interface IDataInitializer : IScopedDependency
     {

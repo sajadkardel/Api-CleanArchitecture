@@ -1,16 +1,10 @@
-﻿using Infrastructure.Attributes;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Infrastructure.Api
+namespace Infrastructure.Api;
+
+[ApiController]
+[Route("api/[controller]/[action]")]
+public class BaseController : ControllerBase
 {
-    [ApiController]
-    [AllowAnonymous]
-    [ApiResultFilter]
-    [Route("api/v{version:apiVersion}/[controller]")]// api/v1/[controller]
-    public class BaseController : ControllerBase
-    {
-        //public UserRepository UserRepository { get; set; } => property injection
-        public bool UserIsAuthenticated => HttpContext.User.Identity is { IsAuthenticated: true };
-    }
 }
