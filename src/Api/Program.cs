@@ -1,6 +1,5 @@
 using Domain.Dtos.Product;
 using Domain.Entities.Identity;
-using Domain.Settings;
 using FluentValidation;
 using Infrastructure.Configuration;
 using Infrastructure.Middlewares;
