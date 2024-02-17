@@ -1,18 +1,11 @@
-﻿using Domain.Context;
-using Domain.Markers;
-using Domain.Settings;
-using Domain.Utilities;
-using FluentValidation.AspNetCore;
-using Infrastructure.PackageConfiguration.FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
+﻿using Domain.Contexts;
+using Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Reflection;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Infrastructure.Configuration;
 
@@ -23,51 +16,40 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
-            //Tips
-            //Automatic client evaluation is no longer supported. This event is no longer generated.
-            //This line is no longer needed.
-            //.ConfigureWarnings(warning => warning.Throw(RelationalEventId.QueryClientEvaluationWarning));
         });
     }
 
-    public static void AddMinimalMvc(this IServiceCollection services)
+    public static void AddIdentity(this IServiceCollection services)
     {
-        services.AddControllers().AddFluentValidation(fv =>
+        services.AddAuthorization();
+
+        services.AddIdentityApiEndpoints<User>(config =>
         {
-            fv.RegisterAllDtoValidators<IDtoValidator>(Assembly.GetEntryAssembly());
-        });
+            config.SignIn = new SignInOptions
+            {
+                RequireConfirmedEmail = true
+            };
+
+            config.User = new UserOptions
+            {
+                RequireUniqueEmail = true
+            };
+
+        }).AddEntityFrameworkStores<ApplicationDbContext>();
     }
 
     public static void AddSwagger(this IServiceCollection services)
     {
-        Assert.NotNull(services, nameof(services));
+        services.AddSwaggerGen(options => {
 
-        //Add services and configuration to use swagger
-        services.AddSwaggerGen(options =>
-        {
-            #region Add Jwt Authentication
-            //Add Lockout icon on top of swagger ui page to authenticate
-            //OAuth2Scheme
-            options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
-                Scheme = "Bearer",
                 In = ParameterLocation.Header,
-                Type = SecuritySchemeType.OAuth2,
-                Flows = new OpenApiOAuthFlows
-                {
-                    Password = new OpenApiOAuthFlow
-                    {
-                        TokenUrl = new Uri("/api/v1/users/Token", UriKind.Relative),
-                        //AuthorizationUrl = new Uri("/api/v1/users/Token", UriKind.Relative)
-                        //Scopes = new Dictionary<string, string>
-                        //{
-                        //    { "readAccess", "Access read operations" },
-                        //    { "writeAccess", "Access write operations" }
-                        //}
-                    }
-                }
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
             });
-            #endregion
+
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
     }
 }

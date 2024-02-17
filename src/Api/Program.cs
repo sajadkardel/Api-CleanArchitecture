@@ -1,17 +1,30 @@
+using Domain.Entities.Identity;
+using Domain.Markers;
 using Domain.Settings;
+using FluentValidation.AspNetCore;
 using Infrastructure.Configuration;
 using Infrastructure.Middlewares;
+using Infrastructure.PackageConfiguration.FluentValidation;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext(builder.Configuration);
+
+builder.Services.AddIdentity();
+
+builder.Services.AddSwagger();
 
 builder.Services.Configure<GeneralSettings>(builder.Configuration.GetSection(nameof(GeneralSettings)));
-builder.Services.AddDbContext(builder.Configuration);
-builder.Services.AddMinimalMvc();
+
+builder.Services.AddControllers().AddFluentValidation(fv =>
+{
+    fv.RegisterAllDtoValidators<IDtoValidator>(Assembly.GetEntryAssembly());
+});
 
 var app = builder.Build();
 
@@ -26,21 +39,14 @@ app.UseCustomExceptionHandler();
 
 app.UseHsts(app.Environment);
 
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-//app.UseAuthentication();
-//app.UseAuthorization();
-
-//Use this config just in Develoment (not in Production)
 app.UseCors(config => config.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
-//app.UseEndpoints(config =>
-//{
-//    config.MapControllers(); // Map attribute routing
-//                             //    .RequireAuthorization(); Apply AuthorizeFilter as global filter to all endpoints
-//                             //config.MapDefaultControllerRoute(); // Map default route {controller=Home}/{action=Index}/{id?}
-//});
+app.UseHttpsRedirection();
+
+app.MapIdentityApi<User>();
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

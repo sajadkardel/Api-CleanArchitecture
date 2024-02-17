@@ -1,5 +1,5 @@
 ﻿using Domain.Common;
-using Domain.Context;
+using Domain.Contexts;
 using Domain.Repositories.Contracts;
 using Domain.Utilities;
 using Microsoft.EntityFrameworkCore;

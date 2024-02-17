@@ -1,30 +1,14 @@
-﻿using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using Domain.Common;
+﻿using Domain.Common;
 using Domain.Entities.Identity;
 using Domain.Utilities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
-namespace Domain.Context
+namespace Domain.Contexts
 {
-    public class ApplicationDbContext : IdentityDbContext<User, Role, int>
-    //DbContext
+    public class ApplicationDbContext(DbContextOptions options) : IdentityDbContext<User, Role, int>(options)
     {
-        public ApplicationDbContext(DbContextOptions options)
-            : base(options)
-        {
-
-        }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=MyApiDb;Integrated Security=true");
-        //    base.OnConfiguring(optionsBuilder);
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -40,29 +24,29 @@ namespace Domain.Context
 
         public override int SaveChanges()
         {
-            _cleanString();
+            CleanString();
             return base.SaveChanges();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            _cleanString();
+            CleanString();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            _cleanString();
+            CleanString();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            _cleanString();
+            CleanString();
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        private void _cleanString()
+        private void CleanString()
         {
             var changedEntities = ChangeTracker.Entries()
                 .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
@@ -77,9 +61,9 @@ namespace Domain.Context
                 foreach (var property in properties)
                 {
                     var propName = property.Name;
-                    var val = (string)property.GetValue(item.Entity, null);
+                    var val = property.GetValue(item.Entity, null) as string;
 
-                    if (val.HasValue())
+                    if (string.IsNullOrEmpty(val) is false)
                     {
                         var newVal = val.Fa2En().FixPersianChars();
                         if (newVal == val)

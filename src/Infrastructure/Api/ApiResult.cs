@@ -1,5 +1,5 @@
 ﻿using Domain.Utilities;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Infrastructure.Api;
 
@@ -8,10 +8,10 @@ public class ApiResult
     public bool IsSuccess { get; set; }
     public ApiResultStatusCode StatusCode { get; set; }
 
-    [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Message { get; set; }
 
-    public ApiResult(bool isSuccess, ApiResultStatusCode statusCode, string message = null)
+    public ApiResult(bool isSuccess, ApiResultStatusCode statusCode, string? message = null)
     {
         IsSuccess = isSuccess;
         StatusCode = statusCode;
@@ -19,15 +19,10 @@ public class ApiResult
     }
 }
 
-public class ApiResult<TData> : ApiResult
+public class ApiResult<TData>(bool isSuccess, ApiResultStatusCode statusCode, TData data, string? message = null) 
+    : ApiResult(isSuccess, statusCode, message) 
     where TData : class
 {
-    [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-    public TData Data { get; set; }
-
-    public ApiResult(bool isSuccess, ApiResultStatusCode statusCode, TData data, string message = null)
-        : base(isSuccess, statusCode, message)
-    {
-        Data = data;
-    }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public TData Data { get; set; } = data;
 }

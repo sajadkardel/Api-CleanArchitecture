@@ -32,6 +32,4 @@ namespace Domain.Entities.Product
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
-
-
 }
