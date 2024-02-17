@@ -1,4 +1,4 @@
-using Domain.Dtos.Product;
+using Application.Dtos.Product;
 using Domain.Entities.Identity;
 using FluentValidation;
 using Infrastructure.Configuration;
@@ -15,6 +15,8 @@ builder.Services.AddDbContext(builder.Configuration);
 builder.Services.AddIdentity();
 
 builder.Services.AddSwagger();
+
+builder.Services.AddMarkedServices();
 
 builder.Services.AddControllers();
 

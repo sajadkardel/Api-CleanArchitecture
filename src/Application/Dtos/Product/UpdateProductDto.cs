@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Domain.Dtos.Product;
+namespace Application.Dtos.Product;
 
 public class UpdateProductDto
 {

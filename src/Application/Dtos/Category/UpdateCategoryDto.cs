@@ -1,7 +1,6 @@
-﻿using Domain.Dtos.Category;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Domain.Dtos.Product;
+namespace Application.Dtos.Category;
 
 public class UpdateCategoryDto
 {

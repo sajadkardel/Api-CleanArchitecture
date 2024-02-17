@@ -1,5 +1,6 @@
 ﻿using Domain.Contexts;
 using Domain.Entities.Identity;
+using Domain.Markers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,5 +52,23 @@ public static class ServiceCollectionExtensions
 
             options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
+    }
+
+    public static void AddMarkedServices(this IServiceCollection services)
+    {
+        services.Scan(scan => scan.FromEntryAssembly()
+        .AddClasses(classes => classes.AssignableTo<IScopedDependency>())
+        .AsImplementedInterfaces()
+        .WithScopedLifetime());
+
+        services.Scan(scan => scan.FromEntryAssembly()
+        .AddClasses(classes => classes.AssignableTo<ISingletonDependency>())
+        .AsImplementedInterfaces()
+        .WithSingletonLifetime());
+
+        services.Scan(scan => scan.FromEntryAssembly()
+        .AddClasses(classes => classes.AssignableTo<ITransientDependency>())
+        .AsImplementedInterfaces()
+        .WithTransientLifetime());
     }
 }

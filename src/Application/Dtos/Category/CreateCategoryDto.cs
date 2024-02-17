@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Domain.Dtos.Category;
+namespace Application.Dtos.Category;
 
 public class CreateCategoryDto
 {

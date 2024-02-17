@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Domain.Common;
 using Domain.Enums;
 using Domain.Utilities;
 using Microsoft.AspNetCore.Identity;

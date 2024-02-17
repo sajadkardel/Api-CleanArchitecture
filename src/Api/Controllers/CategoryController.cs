@@ -1,5 +1,4 @@
-﻿using Domain.Dtos.Category;
-using Domain.Dtos.Product;
+﻿using Application.Dtos.Category;
 using Infrastructure.Api;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
