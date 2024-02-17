@@ -1,15 +1,6 @@
-﻿namespace Domain.Markers
+﻿namespace Domain.Markers;
+
+//just to mark
+public interface IScopedDependency
 {
-    //just to mark
-    public interface IScopedDependency
-    {
-    }
-
-    public interface ITransientDependency
-    {
-    }
-
-    public interface ISingletonDependency
-    {
-    }
 }

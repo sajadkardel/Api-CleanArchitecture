@@ -1,11 +1,9 @@
+using Domain.Dtos.Product;
 using Domain.Entities.Identity;
-using Domain.Markers;
 using Domain.Settings;
-using FluentValidation.AspNetCore;
+using FluentValidation;
 using Infrastructure.Configuration;
 using Infrastructure.Middlewares;
-using Infrastructure.PackageConfiguration.FluentValidation;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +17,9 @@ builder.Services.AddIdentity();
 
 builder.Services.AddSwagger();
 
-builder.Services.Configure<GeneralSettings>(builder.Configuration.GetSection(nameof(GeneralSettings)));
+builder.Services.AddControllers();
 
-builder.Services.AddControllers().AddFluentValidation(fv =>
-{
-    fv.RegisterAllDtoValidators<IDtoValidator>(Assembly.GetEntryAssembly());
-});
+builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDto>();
 
 var app = builder.Build();
 
