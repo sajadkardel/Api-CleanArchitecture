@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace Infrastructure.Configuration;
+namespace Infrastructure.Configurations;
 
 public static class ServiceCollectionExtensions
 {
@@ -41,7 +41,8 @@ public static class ServiceCollectionExtensions
 
     public static void AddSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen(options => {
+        services.AddSwaggerGen(options =>
+        {
 
             options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {

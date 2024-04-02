@@ -1,10 +1,10 @@
 ﻿using Domain.Utilities;
-using Infrastructure.Configuration;
+using Infrastructure.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Infrastructure.Configuration
+namespace Infrastructure.Configurations
 {
     public static class ApplicationBuilderExtensions
     {

@@ -1,7 +1,7 @@
 using Application.Dtos.Product;
 using Domain.Entities.Identity;
 using FluentValidation;
-using Infrastructure.Configuration;
+using Infrastructure.Configurations;
 using Infrastructure.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);

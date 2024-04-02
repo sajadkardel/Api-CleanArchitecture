@@ -1,6 +1,6 @@
 ﻿using Application.Dtos.Product;
 using Application.Services.Contracts;
-using Infrastructure.Api;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

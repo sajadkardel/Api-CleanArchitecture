@@ -1,5 +1,5 @@
 ﻿using Application.Dtos.Category;
-using Infrastructure.Api;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
