@@ -34,7 +34,7 @@ public static class ServiceCollectionExtensions
     {
         IdentityConfigurationConst config = configuration.GetSection($"{nameof(ConfigurationConst)}:{nameof(IdentityConfigurationConst)}").Get<IdentityConfigurationConst>() ?? new();
 
-        services.AddIdentity<User, Role>(identityOptions =>
+        services.AddIdentity<ApplicationUser, ApplicationRole>(identityOptions =>
         {
             //Password Settings
             identityOptions.Password.RequireDigit = config.PasswordRequireDigit;
@@ -109,7 +109,7 @@ public static class ServiceCollectionExtensions
                 OnTokenValidated = async context =>
                 {
                     //var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<User>>();
-                    var _userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
+                    var _userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
 
                     var claimsIdentity = context.Principal?.Identity as ClaimsIdentity;
                     if (claimsIdentity?.Claims?.Any() is false)

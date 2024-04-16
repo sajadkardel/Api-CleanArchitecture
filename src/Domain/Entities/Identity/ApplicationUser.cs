@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Domain.Entities.Identity;
 
-public class User : IdentityUser<int>, IEntity<int>
+public class ApplicationUser : IdentityUser<int>, IEntity<int>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -15,11 +15,11 @@ public class User : IdentityUser<int>, IEntity<int>
     public bool IsActive { get; set; }
 }
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
-        builder.ToTable(nameof(User), typeof(User).GetParentFolderName());
+        builder.ToTable(nameof(ApplicationUser), typeof(ApplicationUser).GetParentFolderName());
         builder.Property(p => p.UserName).IsRequired().HasMaxLength(32);
         builder.Property(p => p.FirstName).IsRequired().HasMaxLength(32);
         builder.Property(p => p.LastName).IsRequired().HasMaxLength(32);

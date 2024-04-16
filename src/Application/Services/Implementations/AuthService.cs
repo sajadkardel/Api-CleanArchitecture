@@ -14,14 +14,14 @@ using System.Text;
 
 namespace Application.Services.Implementations;
 
-public class AuthService(IOptions<ConfigurationConst> configuraion, UserManager<User> userManager) : IAuthService, IScopedDependency
+public class AuthService(IOptions<ConfigurationConst> configuraion, UserManager<ApplicationUser> userManager) : IAuthService, IScopedDependency
 {
     private readonly ConfigurationConst _configuration = configuraion.Value;
-    private readonly UserManager<User> _userManager = userManager;
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
 
     public async Task<AccessTokenResponseDto> SignUpAsync(SignUpRequestDto request, CancellationToken cancellationToken = default)
     {
-        var result = await _userManager.CreateAsync(new User
+        var result = await _userManager.CreateAsync(new ApplicationUser
         {
             UserName = request.UserName,
             FirstName = request.FisrtName,
@@ -59,7 +59,7 @@ public class AuthService(IOptions<ConfigurationConst> configuraion, UserManager<
 
     // private methods
 
-    private AccessTokenResponseDto GenerateToken(User user)
+    private AccessTokenResponseDto GenerateToken(ApplicationUser user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.JwtConfigurationConst.SecretKey));
         SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);

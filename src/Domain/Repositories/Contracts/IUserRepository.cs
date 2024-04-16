@@ -2,8 +2,7 @@
 
 namespace Domain.Repositories.Contracts;
 
-public interface IUserRepository : IRepository<User>
+public interface IUserRepository : IRepository<ApplicationUser>
 {
-    Task UpdateSecurityStampAsync(User user, CancellationToken cancellationToken);
-    Task UpdateLastLoginDateAsync(User user, CancellationToken cancellationToken);
+    Task UpdateSecurityStampAsync(ApplicationUser user, CancellationToken cancellationToken);
 }
